@@ -48,7 +48,8 @@ public class Eval extends JFrame implements ActionListener, ItemListener {
 //    private JComboBox computedComboBox;
     private JPanel computedPanel;
     private JButton computedButton;
-    private JEditorPane computedEditorPane;
+//    private JEditorPane computedEditorPane;
+    private JTextField computedTextField;
 
     //instance variables to hold our data from the gui object to update the database
     String myteamname;
@@ -60,6 +61,8 @@ public class Eval extends JFrame implements ActionListener, ItemListener {
     double teamavg;
     boolean avgcalculated;
     String teamcomments;
+    String textavgtextbox;
+
     // instance variables used to manipulate database
     private Connection myConnection;
     private Statement myStatement;
@@ -388,9 +391,12 @@ public class Eval extends JFrame implements ActionListener, ItemListener {
 //        computedComboBox.addItem("");
 //        computedComboBox.setSelectedIndex(0);
 //        computedPanel.add(computedComboBox);
-        computedEditorPane = new JEditorPane();
-        computedEditorPane.setBounds(200, 35, 100, 30);
-        computedPanel.add(computedEditorPane);
+//        computedEditorPane = new JEditorPane();
+//        computedEditorPane.setBounds(200, 35, 100, 30);
+//        computedPanel.add(computedEditorPane);
+        computedTextField = new JTextField();
+        computedTextField.setBounds(200, 35, 100, 30);
+        computedPanel.add(computedTextField);
 
         computedButton = new JButton("Calc Avg");
         computedButton.setBounds(25, 40, 100, 30);
@@ -417,15 +423,15 @@ public class Eval extends JFrame implements ActionListener, ItemListener {
         buttonPanel.add(clearButton);
         clearButton.addActionListener(this);
 
-        JSlider myslider = new JSlider(JSlider.HORIZONTAL, 1, 5, 1);
-
-        myslider.setBounds(80, 50, 200, 200);
-        buttonPanel.add(myslider);
+//        JSlider myslider = new JSlider(JSlider.HORIZONTAL, 1, 5, 1);
+//
+//        myslider.setBounds(80, 50, 200, 200);
+//        buttonPanel.add(myslider);
         //read teams from database and
         // place them in teamsJComboBox
-//        loadTeams();
+        loadTeams();
 
-        setTitle("EVAL"); // set title bar string
+        setTitle("EVAL-UMSL 6808 P2-David Dong"); // set title bar string
         setSize(375, 410); // set window size
         setVisible(true); // display window
     }
@@ -437,54 +443,154 @@ public class Eval extends JFrame implements ActionListener, ItemListener {
         if (event.getSource().equals(submitButton)) {
             myteamname = (String) teamComboBox.getSelectedItem();
 
-            if (rb1.isSelected()) {
-                q1 = Integer.parseInt(rb1.getText());
-            } else if (rb2.isSelected()) {
-                q1 = Integer.parseInt(rb2.getText());
-            } else if (rb3.isSelected()) {
-                q1 = Integer.parseInt(rb3.getText());
+            if (rb11.isSelected()) {
+                q1 = Integer.parseInt(rb11.getText());
+            } else if (rb12.isSelected()) {
+                q1 = Integer.parseInt(rb12.getText());
+            } else if (rb13.isSelected()) {
+                q1 = Integer.parseInt(rb13.getText());
+            } else if (rb14.isSelected()) {
+                q1 = Integer.parseInt(rb14.getText());
+            } else if (rb15.isSelected()) {
+                q1 = Integer.parseInt(rb15.getText());
             }
 
-            q2 = 8;
-            q3 = 2;
-            q4 = 5;
-            teamavg = ((q1 + q2 + q3 + q4) / 4);
-            teamcomments = "Not a bad presentation not a good one either";
+            if (rb21.isSelected()) {
+                q2 = Integer.parseInt(rb21.getText());
+            } else if (rb22.isSelected()) {
+                q2 = Integer.parseInt(rb22.getText());
+            } else if (rb23.isSelected()) {
+                q2 = Integer.parseInt(rb23.getText());
+            } else if (rb24.isSelected()) {
+                q2 = Integer.parseInt(rb24.getText());
+            } else if (rb25.isSelected()) {
+                q2 = Integer.parseInt(rb25.getText());
+            }
+            if (rb31.isSelected()) {
+                q3 = Integer.parseInt(rb31.getText());
+            } else if (rb32.isSelected()) {
+                q3 = Integer.parseInt(rb32.getText());
+            } else if (rb33.isSelected()) {
+                q3 = Integer.parseInt(rb33.getText());
+            } else if (rb34.isSelected()) {
+                q3 = Integer.parseInt(rb34.getText());
+            } else if (rb35.isSelected()) {
+                q3 = Integer.parseInt(rb35.getText());
+            }
 
+            if (rb41.isSelected()) {
+                q4 = Integer.parseInt(rb41.getText());
+            } else if (rb42.isSelected()) {
+                q4 = Integer.parseInt(rb42.getText());
+            } else if (rb43.isSelected()) {
+                q4 = Integer.parseInt(rb43.getText());
+            } else if (rb44.isSelected()) {
+                q4 = Integer.parseInt(rb44.getText());
+            } else if (rb45.isSelected()) {
+                q4 = Integer.parseInt(rb45.getText());
+            }
+
+            teamavg = (double) ((q1 + q2 + q3 + q4) / 4.0);
+//            teamcomments = "Not a bad presentation not a good one either";
+            teamcomments = commentsEditorPane.getText();
+            if (event.getSource().equals(computedButton)) {
+                String teamavgString = String.valueOf(teamavg);
+                computedTextField.setText("teamavgString");
+                submitButton.setEnabled(true);
+            }
             updateTeams();
-        }
-        // else if(event.getSource().equals(clearButton))
-        // {
-        // textavgtextbox.text = "";
-        // submitButton.setEnabled(false);
-        // }
-        // else if(event.getSource().equals(teamavgButton))
-        // {
-        // int tempval1 = slidertechnical.getValue();
-        // int tempval2 = slideruse.getValue();
-        // int tempval3 = sliderclarity.getValue();
-        // int tempval4 = slideroverall.getValue();
-        // teamavg = (double)(tempval1 + teampval2 + tempval3 + tempval4)/4.0
-        // teamavgTextBox.text = teamavg;
-        // submitButton.setEnabled(true);
-        // avgcalculated = true;
+        } else if (event.getSource().equals(clearButton)) {
+//            textavgtextbox.text = "";
+            computedTextField.setText("");
 
+            submitButton.setEnabled(false);
+        } //else if (event.getSource().equals(teamavgButton)) {
+        //            int tempval1 = slidertechnical.getValue();
+        //            int tempval2 = slideruse.getValue();
+        //            int tempval3 = sliderclarity.getValue();
+        //            int tempval4 = slideroverall.getValue();
+        //            teamavg = (double) (tempval1 + teampval2 + tempval3 + tempval4) / 4.0
+        //            teamavgTextBox.text = teamavg;
+        //            submitButton.setEnabled(true);
+        //            avgcalculated = true;
+        //        
+        else if (event.getSource().equals(computedButton)) {
+            if (rb11.isSelected()) {
+                q1 = Integer.parseInt(rb11.getText());
+            } else if (rb12.isSelected()) {
+                q1 = Integer.parseInt(rb12.getText());
+            } else if (rb13.isSelected()) {
+                q1 = Integer.parseInt(rb13.getText());
+            } else if (rb14.isSelected()) {
+                q1 = Integer.parseInt(rb14.getText());
+            } else if (rb15.isSelected()) {
+                q1 = Integer.parseInt(rb15.getText());
+            }
+
+            if (rb21.isSelected()) {
+                q2 = Integer.parseInt(rb21.getText());
+            } else if (rb22.isSelected()) {
+                q2 = Integer.parseInt(rb22.getText());
+            } else if (rb23.isSelected()) {
+                q2 = Integer.parseInt(rb23.getText());
+            } else if (rb24.isSelected()) {
+                q2 = Integer.parseInt(rb24.getText());
+            } else if (rb25.isSelected()) {
+                q2 = Integer.parseInt(rb25.getText());
+            }
+            if (rb31.isSelected()) {
+                q3 = Integer.parseInt(rb31.getText());
+            } else if (rb32.isSelected()) {
+                q3 = Integer.parseInt(rb32.getText());
+            } else if (rb33.isSelected()) {
+                q3 = Integer.parseInt(rb33.getText());
+            } else if (rb34.isSelected()) {
+                q3 = Integer.parseInt(rb34.getText());
+            } else if (rb35.isSelected()) {
+                q3 = Integer.parseInt(rb35.getText());
+            }
+
+            if (rb41.isSelected()) {
+                q4 = Integer.parseInt(rb41.getText());
+            } else if (rb42.isSelected()) {
+                q4 = Integer.parseInt(rb42.getText());
+            } else if (rb43.isSelected()) {
+                q4 = Integer.parseInt(rb43.getText());
+            } else if (rb44.isSelected()) {
+                q4 = Integer.parseInt(rb44.getText());
+            } else if (rb45.isSelected()) {
+                q4 = Integer.parseInt(rb45.getText());
+            }
+
+            teamavg = (double) ((q1 + q2 + q3 + q4) / 4.0);
+            
+            
+            
+            
+            String teamavgString = String.valueOf(teamavg);
+            computedTextField.setText(teamavgString);
+            submitButton.setEnabled(true);
+        }
+
+//        }
     }
 
     @Override
-    public void itemStateChanged(ItemEvent event) {
-
-        if (event.getSource() == rb1 && event.getStateChange() == ItemEvent.SELECTED) {
-            q1 = Integer.parseInt(rb1.getText());
-        } else if (event.getSource() == rb2 && event.getStateChange() == ItemEvent.SELECTED) {
-            q1 = Integer.parseInt(rb2.getText());
-        } else if (event.getSource() == rb3 && event.getStateChange() == ItemEvent.SELECTED) {
-            q1 = Integer.parseInt(rb3.getText());
-        } else if (event.getSource() == rb1 && event.getStateChange() == ItemEvent.DESELECTED) {
-            JOptionPane.showMessageDialog(null, "Eggs are not supposed to be green.");
-        }
+    public void itemStateChanged(ItemEvent event
+    ) {
+//
+//        if (event.getSource() == rb1 && event.getStateChange() == ItemEvent.SELECTED) {
+//                q1 = Integer.parseInt(rb1.getText());
+//            } else if (event.getSource() == rb2 && event.getStateChange() == ItemEvent.SELECTED) {
+//                q1 = Integer.parseInt(rb2.getText());
+//            } else if (event.getSource() == rb3 && event.getStateChange() == ItemEvent.SELECTED) {
+//                q1 = Integer.parseInt(rb3.getText());
+//            } else if (event.getSource() == rb1 && event.getStateChange() == ItemEvent.DESELECTED) {
+//                JOptionPane.showMessageDialog(null, "Eggs are not supposed to be green.");
+//            }
     }
 
+//
     private void updateTeams() {
         // update teams in database
         try {
